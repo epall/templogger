@@ -1,5 +1,5 @@
 <?php
-$handle = fopen('tinidata.txt', 'r');
+$handle = fopen('datalog.txt', 'r');
 $graphs = array();
 $dates = array();
 while(!feof($handle)){

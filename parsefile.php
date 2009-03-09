@@ -6,7 +6,7 @@ if($_GET['start']){
 	// so not at epoch
 	$startstamp = $_GET['start'];
 }
-$handle = fopen('tinidata.txt', 'r');
+$handle = fopen('datalog.txt', 'r');
 $graphs = array();
 $counts = array();
 $dates = array();
@@ -42,8 +42,7 @@ foreach($counts as $key => $this_count){ // pad from end of data to now
 
 
 function process_older_file($startstamp, $number){
-	$file = gzopen('tinidata.txt.'.$number.'.gz', 'r');
-//	echo "attempting to process".'tinidata.txt.'.$number.'.gz';
+	$file = gzopen('datalog.txt.'.$number.'.gz', 'r');
 	if($file){
 		$firstline = gzgets($file);
 		if(ereg('^DATE ', $firstline)){ // not null or something

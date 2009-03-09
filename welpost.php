@@ -45,10 +45,10 @@ function sensor($sensorName){
 }
 $values = array_filter(array_keys($_GET), sensor);
 
-$handle = fopen("tinidata.txt", "a");
+$handle = fopen("datalog.txt", "a");
 fwrite($handle, 'DATE '.$_GET['Date'].' '.$_GET['Time']."\n");
 foreach($values as $key){
-  fwrite($handle, $key);
+  fwrite($handle, $_GET['Uu'].':'.$key);
   fwrite($handle, ',');
 
   // divide by 1000 due to WEL stupidity
