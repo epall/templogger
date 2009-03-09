@@ -1,4 +1,4 @@
-<?
+<?php
 date_default_timezone_set("America/Los_Angeles");
 $values = file_get_contents("php://input");
 if($values == ""){

@@ -1,4 +1,4 @@
-<?
+<?php
 $handle = fopen('tinidata.txt', 'r');
 $graphs = array();
 $dates = array();

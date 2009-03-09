@@ -42,7 +42,7 @@ if($startdate != "" && $enddate != ""){
 </head>
 <body>
 <h1>Allen house temperature log</h1>
-<img src="graph.php?<?
+<img src="graph.php?<?php
 if ($start){ echo 'start='.$start;}
 if ($end){ echo '&end='.$end;}
 if (@$_GET['addresses']){
@@ -59,13 +59,13 @@ if(@$_GET['deriv']){
 ?>"/>
 <br/>
 <form method="get">
-Last <input name="days" type="text" onfocus="cleardates();" size="3" <? if($days) {echo "value=\"".$days."\"";}?>> days.
+Last <input name="days" type="text" onfocus="cleardates();" size="3" <?php if($days) {echo "value=\"".$days."\"";}?>> days.
 <br/>
 <b>OR: <a href="http://www.gnu.org/software/tar/manual/html_node/tar_109.html">format</a></b>
 <br/>
-Start date: <input name="startdate" onfocus="cleardays();" type="text" size="20" <? if(@$startdate) {echo "value=\"".$startdate."\"";}?>>
+Start date: <input name="startdate" onfocus="cleardays();" type="text" size="20" <?php if(@$startdate) {echo "value=\"".$startdate."\"";}?>>
 <br/>
-End date: <input name="enddate" onfocus="cleardays();" type="text" size="20" <? if(@$enddate) {echo "value=\"".$enddate."\"";}?>>
+End date: <input name="enddate" onfocus="cleardays();" type="text" size="20" <?php if(@$enddate) {echo "value=\"".$enddate."\"";}?>>
 <br/>
 <table cellpadding="2">
 <thead>
@@ -75,7 +75,7 @@ End date: <input name="enddate" onfocus="cleardays();" type="text" size="20" <? 
 <?php
 foreach($mappings as $mapping){
     ?><tr><td><input type="checkbox" name="addresses[]" value="<?= $mapping[1]?>" <?php if(@array_search($mapping[1], $_GET['addresses']) !== false) {echo "checked";} ?>/></td><td> <?= $mapping[0] ?> (<?=$mapping[2]?>)</td>
-<td><input type="radio" name="deriv" value="<?=$mapping[1]?>" <? if(@$_GET['deriv'] == $mapping[1]){echo "checked";}?>/></td>
+<td><input type="radio" name="deriv" value="<?=$mapping[1]?>" <?php if(@$_GET['deriv'] == $mapping[1]){echo "checked";}?>/></td>
 </tr>
 <?php
 }?>
@@ -85,6 +85,6 @@ foreach($mappings as $mapping){
 </form>
 <br/>
 <a href="datadump.php">Get all data (CSV)</a>
-<a href="datadump.php?<?if ($start){ echo 'start='.$start;} if ($end){ echo '&end='.$end;}?>">Get displayed data (CSV)</a>
+<a href="datadump.php?<?php if ($start){ echo 'start='.$start;} if ($end){ echo '&end='.$end;}?>">Get displayed data (CSV)</a>
 </body>
 </html>

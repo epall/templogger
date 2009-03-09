@@ -1,4 +1,4 @@
-<?
+<?php
 //include_once('./profiler.inc');
 //$prof = new Profiler(true);
 $startstamp = 0; // start at epoch
