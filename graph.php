@@ -1,8 +1,10 @@
 <?php
 
-include ("jpgraph-2.1.2/src/jpgraph.php");
-include ("jpgraph-2.1.2/src/jpgraph_line.php");
-include ("jpgraph-2.1.2/src/jpgraph_date.php");
+DEFINE ("TTF_DIR","/users/home/epall/domains/sundialtelemetrics.com/web/public/templogger/" );  
+
+include ("jpgraph-2.3.4/src/jpgraph.php");
+include ("jpgraph-2.3.4/src/jpgraph_line.php");
+include ("jpgraph-2.3.4/src/jpgraph_date.php");
 
 // load data from file
 require_once ("parsefile.php");
@@ -78,7 +80,7 @@ function deriv($f1, $f2, $d1, $d2){
 
 // Create the graph. These two calls are always required
 $graph = new Graph(900,480,"auto");
-$graph->SetMargin(50, 40, 70, 90);
+$graph->img->SetMargin(50, 40, 70, 90);
 $graph->SetScale("datlin");
 
 foreach($mappings as $mapping){
