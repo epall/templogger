@@ -78,8 +78,8 @@ function deriv($f1, $f2, $d1, $d2){
 	return ($f2-$f1)/($d2-$d1)*3600;
 }
 
-function cooling($v1, $v2, $divisor){
-  return ($v1-$v2)/$divisor;
+function cooling($v1, $v2, $derivative){
+  return $derivative/($v1-$v2);
 }
 
 function divide(&$value, $key, $divisor){
@@ -131,7 +131,7 @@ if(@$_GET['deriv']){
 	$graph->AddY2($lineplot);
 }
 
-if(isset($inside_sensor) && isset($outside_sensor)){
+if(isset($inside_sensor) && isset($outside_sensor) && isset($deriv)){
 	$inside = array_slice($graphs[$inside_sensor['sensorname']], $start_point, $end_point);
 	$outside = array_slice($graphs[$outside_sensor['sensorname']], $start_point, $end_point);
   $divisor = $inside_sensor['divisor'];
@@ -145,8 +145,8 @@ if(isset($inside_sensor) && isset($outside_sensor)){
 	$diff = array_map("cooling", $inside, $outside, $deriv);
 	$lineplot = new LinePlot($diff, $dates);
 	$lineplot->SetColor('gray');
-	$lineplot->SetLegend('(I-O)/D');
-	$graph->Add($lineplot);
+	$lineplot->SetLegend('Deriv/Diff');
+	$graph->AddY2($lineplot);
 }
 
 //$graph->title->Set ('Temperatures ('.$start_point.'-'.$end_point.')');
