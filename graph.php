@@ -78,6 +78,10 @@ function deriv($f1, $f2, $d1, $d2){
 	return ($f2-$f1)/($d2-$d1)*3600;
 }
 
+function cooling($v1, $v2, $divisor){
+  return ($v1-$v2)/$divisor;
+}
+
 function divide(&$value, $key, $divisor){
   $value = $value/$divisor;
 }
@@ -104,6 +108,8 @@ foreach($sensors as $sensor){
 	}
 }
 
+$deriv = null;
+
 if(@$_GET['deriv']){
 	$dataset = array_slice($graphs[$_GET['deriv']], $start_point, $end_point);
 	$divisor = $sensors[$_GET['deriv']]['divisor'];
@@ -125,13 +131,21 @@ if(@$_GET['deriv']){
 	$graph->AddY2($lineplot);
 }
 
-if(isset($sensors['__INSIDE']) && isset($sensors['__OUTSIDE'])){
-	$inside = array_slice($graphs[$sensors['__INSIDE']], $start_point, $end_point);
-	$outside = array_slice($graphs[$sensors['__OUTSIDE']], $start_point, $end_point);
-	$diff = array_map("difference", $inside, $outside);
+if(isset($inside_sensor) && isset($outside_sensor)){
+	$inside = array_slice($graphs[$inside_sensor['sensorname']], $start_point, $end_point);
+	$outside = array_slice($graphs[$outside_sensor['sensorname']], $start_point, $end_point);
+  $divisor = $inside_sensor['divisor'];
+  if(isset($divisor)){
+    array_walk($inside, 'divide', $divisor);
+  }
+  $divisor2 = $outside_sensor['divisor'];
+  if(isset($divisor2)){
+    array_walk($outside, 'divide', $divisor2);
+  }
+	$diff = array_map("cooling", $inside, $outside, $deriv);
 	$lineplot = new LinePlot($diff, $dates);
-	$lineplot->SetColor('black');
-	$lineplot->SetLegend('inside - outside');
+	$lineplot->SetColor('gray');
+	$lineplot->SetLegend('(I-O)/D');
 	$graph->Add($lineplot);
 }
 
