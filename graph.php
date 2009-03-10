@@ -49,13 +49,13 @@ echo "<br/>End at $last";
 */
 $end_point = $end_length;
 
-function is_requested($mapping){
+function is_requested($sensor){
     $selected = false;
     
     if(@$_GET['addresses']){
         $addresses = $_GET['addresses'];
         foreach(explode(',', $addresses) as $address){
-            if($mapping[1] == $address){
+            if($sensor['sensorname'] == $address){
                 $selected = true;
             }
         }
@@ -67,7 +67,7 @@ function is_requested($mapping){
     return $selected;
 }
 
-$mappings = array_filter($mappings, 'is_requested');
+$sensors = array_filter($sensors, 'is_requested');
 
 $dates = array_slice($dates, $start_point, $end_point);
 
@@ -78,18 +78,27 @@ function deriv($f1, $f2, $d1, $d2){
 	return ($f2-$f1)/($d2-$d1)*3600;
 }
 
+function divide(&$value, $key, $divisor){
+  $value = $value/$divisor;
+}
+
 // Create the graph. These two calls are always required
 $graph = new Graph(900,480,"auto");
 $graph->img->SetMargin(50, 40, 70, 90);
 $graph->SetScale("datlin");
 
-foreach($mappings as $mapping){
-	if(@$graphs[$mapping[1]] != null){
-		$ydata = array_slice($graphs[$mapping[1]], $start_point, $end_point);
+foreach($sensors as $sensor){
+  $sensorname = trim($sensor['sensorname']);
+	if(isset($graphs[$sensorname])){
+    $divisor = $sensor['divisor'];
+		$ydata = array_slice($graphs[$sensorname], $start_point, $end_point);
+    if(isset($divisor)){
+      array_walk($ydata, 'divide', $divisor);
+    }
 
 		$lineplot = new LinePlot($ydata, $dates);
-		$lineplot->SetColor($mapping[2]);
-		$lineplot->SetLegend($mapping[0]);
+		$lineplot->SetColor(strtolower($sensor['color']));
+		$lineplot->SetLegend($sensor['displayname']);
 	
 		$graph->Add($lineplot);
 	}
@@ -97,6 +106,10 @@ foreach($mappings as $mapping){
 
 if(@$_GET['deriv']){
 	$dataset = array_slice($graphs[$_GET['deriv']], $start_point, $end_point);
+	$divisor = $sensors[$_GET['deriv']]['divisor'];
+  if(isset($divisor)){
+    array_walk($dataset, 'divide', $divisor);
+  }
 	$data2 = $dataset;
 	array_shift($data2);
 	$dates2 = $dates;
@@ -110,6 +123,16 @@ if(@$_GET['deriv']){
 	$lineplot->SetColor('black');
 	$lineplot->SetLegend('rate of change');
 	$graph->AddY2($lineplot);
+}
+
+if(isset($sensors['__INSIDE']) && isset($sensors['__OUTSIDE'])){
+	$inside = array_slice($graphs[$sensors['__INSIDE']], $start_point, $end_point);
+	$outside = array_slice($graphs[$sensors['__OUTSIDE']], $start_point, $end_point);
+	$diff = array_map("difference", $inside, $outside);
+	$lineplot = new LinePlot($diff, $dates);
+	$lineplot->SetColor('black');
+	$lineplot->SetLegend('inside - outside');
+	$graph->Add($lineplot);
 }
 
 //$graph->title->Set ('Temperatures ('.$start_point.'-'.$end_point.')');

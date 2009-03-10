@@ -73,9 +73,9 @@ End date: <input name="enddate" onfocus="cleardays();" type="text" size="20" <?p
 </thead>
 <tbody>
 <?php
-foreach($mappings as $mapping){
-    ?><tr><td><input type="checkbox" name="addresses[]" value="<?= $mapping[1]?>" <?php if(@array_search($mapping[1], $_GET['addresses']) !== false) {echo "checked";} ?>/></td><td> <?= $mapping[0] ?> (<?=$mapping[2]?>)</td>
-<td><input type="radio" name="deriv" value="<?=$mapping[1]?>" <?php if(@$_GET['deriv'] == $mapping[1]){echo "checked";}?>/></td>
+foreach($sensors as $sensor){
+    ?><tr><td><input type="checkbox" name="addresses[]" value="<?= $sensor['sensorname'] ?>" <?php if(@array_search($sensor['sensorname'], $_GET['addresses']) !== false) {echo "checked";} ?>/></td><td> <?= $sensor['displayname'] ?> (<?=$sensor['color']?>)</td>
+<td><input type="radio" name="deriv" value="<?=$sensor['sensorname']?>" <?php if(@$_GET['deriv'] == $sensor['sensorname']){echo "checked";}?>/></td>
 </tr>
 <?php
 }?>

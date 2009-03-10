@@ -50,12 +50,7 @@ fwrite($handle, 'DATE '.$_GET['Date'].' '.$_GET['Time']."\n");
 foreach($values as $key){
   fwrite($handle, $_GET['Uu'].':'.$key);
   fwrite($handle, ',');
-
-  // divide by 1000 due to WEL stupidity
-  if($key[0] == 'T')
-    fwrite($handle, $_GET[$key]/1000);
-  else
-    fwrite($handle, $_GET[$key]);
+  fwrite($handle, $_GET[$key]);
   fwrite($handle, "\n");
 }
 fclose($handle);
