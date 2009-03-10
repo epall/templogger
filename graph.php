@@ -124,11 +124,10 @@ if(@$_GET['deriv']){
 //	echo "data2 is ".count($data2)." long<br/>";
 	$deriv = array_map("deriv", $dataset, $data2, $dates, $dates2);
 //	echo "deriv is ".count($deriv)." long<br/>";
-	$graph->SetY2Scale('lin');
 	$lineplot = new LinePlot($deriv, $dates);
 	$lineplot->SetColor('black');
 	$lineplot->SetLegend('rate of change');
-	$graph->AddY2($lineplot);
+	$graph->Add($lineplot);
 }
 
 if(isset($inside_sensor) && isset($outside_sensor) && isset($deriv)){
@@ -144,8 +143,9 @@ if(isset($inside_sensor) && isset($outside_sensor) && isset($deriv)){
   }
 	$diff = array_map("cooling", $inside, $outside, $deriv);
 	$lineplot = new LinePlot($diff, $dates);
-	$lineplot->SetColor('gray');
+	$lineplot->SetColor('darkgray');
 	$lineplot->SetLegend('Deriv/Diff');
+	$graph->SetY2Scale('lin');
 	$graph->AddY2($lineplot);
 }
 
