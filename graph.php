@@ -142,6 +142,8 @@ if(isset($inside_sensor) && isset($outside_sensor) && isset($deriv)){
     array_walk($outside, 'divide', $divisor2);
   }
 	$diff = array_map("cooling", $inside, $outside, $deriv);
+  array_pop($diff);
+  array_pop($dates);
 	$lineplot = new LinePlot($diff, $dates);
 	$lineplot->SetColor('darkgray');
 	$lineplot->SetLegend('Deriv/Diff');
