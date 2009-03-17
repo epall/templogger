@@ -75,7 +75,7 @@ function deriv($f1, $f2, $d1, $d2){
 	if($f1 == null || $f2 == null){
 		return null;
 	}
-	return ($f2-$f1)/($d2-$d1)*3600;
+	return ($f2-$f1)/($d2-$d1)*3600*10;
 }
 
 function cooling($v1, $v2, $derivative){
@@ -126,7 +126,7 @@ if(@$_GET['deriv']){
 //	echo "deriv is ".count($deriv)." long<br/>";
 	$lineplot = new LinePlot($deriv, $dates);
 	$lineplot->SetColor('black');
-	$lineplot->SetLegend('rate of change');
+	$lineplot->SetLegend('rate of change (times 10)');
 	$graph->Add($lineplot);
 }
 
