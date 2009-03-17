@@ -87,8 +87,8 @@ function divide(&$value, $key, $divisor){
 }
 
 // Create the graph. These two calls are always required
-$graph = new Graph(900,480,"auto");
-$graph->img->SetMargin(50, 40, 70, 90);
+$graph = new Graph(950,480,"auto");
+$graph->img->SetMargin(60, 55, 70, 70);
 $graph->SetScale("datlin");
 
 foreach($sensors as $sensor){
@@ -154,7 +154,7 @@ if(isset($inside_sensor) && isset($outside_sensor) && isset($deriv)){
 //$graph->title->Set ('Temperatures ('.$start_point.'-'.$end_point.')');
 $graph->title->Set ('Temperatures');
 //$graph->xaxis->title->Set('Time');
-$graph->yaxis->title->Set('Degrees Fahrenheit');
+$graph->yaxis->title->Set('Degrees Celsius');
 $graph->xaxis->scale->SetDateFormat('m/d h:i a');
 $graph->xaxis->SetLabelAngle(30);
 $graph->xaxis->SetFont(FF_VERA);
