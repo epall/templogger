@@ -31,6 +31,31 @@ if($start_point == -1){
 }
 
 
+$deriv = null;
+
+function deriv($f1, $f2, $d1, $d2){
+	if($f1 == null || $f2 == null){
+		return null;
+	}
+	return ($f2-$f1); ///($d2-$d1)*3600*10;
+}
+
+if(@$_GET['deriv']){
+	$dataset = array_slice($graphs[$_GET['deriv']], $start_point, $end_point);
+  // $divisor = $sensors[$_GET['deriv']]['divisor'];
+  //   if(isset($divisor)){
+  //     array_walk($dataset, 'divide', $divisor);
+  //   }
+	$data2 = $dataset;
+	array_shift($data2);
+	$dates2 = $dates;
+	array_shift($dates2);
+//	echo "dataset is ".count($dataset)." long<br/>";
+//	echo "data2 is ".count($data2)." long<br/>";
+	$deriv = array_map("deriv", $dataset, $data2, $dates, $dates2);
+//	echo "deriv is ".count($deriv)." long<br/>";
+}
+
 $maxval = 0;
 
 echo "Date,";
@@ -40,6 +65,11 @@ foreach(array_keys($graphs) as $key){
 		$maxval = count($graphs[$key]);
 	}
 }
+
+if(isset($_GET['deriv'])){
+  echo "Derivative of ".$_GET['deriv'];
+}
+
 echo "\n";
 
 $index = 0;
@@ -47,12 +77,17 @@ if ($end_point < $maxval){
 	$maxval = $end_point;
 }
 
+$index2 = 0;
+
 for($index = $start_point; $index < $maxval; $index++){
 	echo strftime("%D %H:%M", $dates[$index]).",";
 	foreach(array_keys($graphs) as $key){
-		echo$graphs[$key][$index].",";
+		echo $graphs[$key][$index].",";
 	}
+  if(isset($_GET['deriv'])){
+    echo $deriv[$index2];
+  }
+  $index2++;
 	echo "\n";
 }
-
 ?>

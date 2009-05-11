@@ -85,6 +85,6 @@ foreach($sensors as $sensor){
 </form>
 <br/>
 <a href="datadump.php">Get all data (CSV)</a>
-<a href="datadump.php?<?php if ($start){ echo 'start='.$start;} if ($end){ echo '&end='.$end;}?>">Get displayed data (CSV)</a>
+<a href="datadump.php?<?php if ($start){ echo 'start='.$start;} if ($end){ echo '&end='.$end;} if(isset($_GET['deriv'])) {echo '&deriv='.$_GET['deriv'];}?>">Get displayed data (CSV)</a>
 </body>
 </html>

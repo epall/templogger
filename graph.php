@@ -141,6 +141,9 @@ if(isset($inside_sensor) && isset($outside_sensor) && isset($deriv)){
   if(isset($divisor2)){
     array_walk($outside, 'divide', $divisor2);
   }
+
+  array_walk($deriv, 'divide', 10);
+  
 	$diff = array_map("cooling", $inside, $outside, $deriv);
   array_pop($diff);
   array_pop($dates);
