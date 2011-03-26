@@ -5,10 +5,8 @@ include ("jpgraph-2.1.2/src/jpgraph_line.php");
 include ("jpgraph-2.1.2/src/jpgraph_date.php");
 
 // load data from file
-error_log("Currently taking ".(memory_get_usage()/1048576)." of RAM");
 require_once ("parsefile.php");
 require_once ("mappings.php");
-error_log("Line 11: ".(memory_get_usage()/1048576)." of RAM");
 
 // Some data
 $graph_values = array_values($graphs);
@@ -34,8 +32,6 @@ if($_GET['end']){
 		}
 	}
 }
-
-error_log("Line 37: ".(memory_get_usage()/1048576)." of RAM");
 
 if($start_point == -1){
 	$start_point = $end_point;
@@ -72,8 +68,6 @@ function is_requested($mapping){
 $mappings = array_filter($mappings, 'is_requested');
 
 $dates = array_slice($dates, $start_point, $end_point);
-
-error_log("Line 72: ".(memory_get_usage()/1048576)." of RAM");
 
 function deriv($f1, $f2, $d1, $d2){
 	if($f1 == null || $f2 == null){
@@ -115,8 +109,6 @@ if(@$_GET['deriv']){
 	$lineplot->SetLegend('rate of change');
 	$graph->AddY2($lineplot);
 }
-
-error_log("Line 114: ".(memory_get_usage()/1048576)." of RAM");
 
 //$graph->title->Set ('Temperatures ('.$start_point.'-'.$end_point.')');
 $graph->title->Set ('Temperatures');
