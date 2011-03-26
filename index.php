@@ -6,6 +6,9 @@ $end = null;
 $start = @$_GET['start'];
 $end = @$_GET['end'];
 $days = @$_GET['days'];
+if(!$days){
+  $days = 1;
+}
 
 $startdate = @$_GET['startdate'];
 $enddate = @$_GET['enddate'];
@@ -81,6 +84,7 @@ foreach($mappings as $mapping){
 }?>
 </tbody>
 </table>
+<a href="sensorinfo.php">Edit sensor list</a><br>
 <input type="submit" value="go"/>
 </form>
 <br/>
