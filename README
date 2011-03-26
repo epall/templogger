@@ -1,0 +1,24 @@
+This is a tool for logging and graphing temperature sensors over time. It is
+designed to receive data from some custom code running on a Dallas Semiconductor
+TINI platform or a Web Energy Logger.
+
+You're probably better off building your own solution with RRDtool
+<http://oss.oetiker.ch/rrdtool/>, which I was unaware of when I built
+templogger.
+
+If you do want to use templogger, you're best off HTTP POSTing data to the
+welpost.php script. It's pretty easy to reverse-engineer the format from that
+source code. You'll also want to set up a logrotate rule on tinidata.txt that
+looks something like this:
+
+/users/home/epall/web/public/templogger/tinidata.txt {
+        compress
+        weekly
+        rotate 1000
+        create 0666 <USER> <GROUP>
+        mail me@mydomain.com
+}
+
+The compression is required, as templogger assumes all older data is compressed.
+
+The sundial branch is somewhat more developed, but it's also less tested.
